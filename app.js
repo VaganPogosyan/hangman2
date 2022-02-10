@@ -36,14 +36,13 @@ alphabetArray.forEach((el) => {
 });
 
 const imageDiv = document.querySelector(".images");
-const nameDiv = document.createElement("div");
-nameDiv.className = "name-div";
-imageDiv.insertAdjacentElement("afterend", nameDiv);
+const nameDiv = document.querySelector(".name-div");
 
 let randomName = "";
 let firstName = [];
 let lastName = [];
 let space = [" "];
+let countMistakes = 0;
 
 function getRandomName() {
   const i = Math.floor(Math.random() * names.length);
@@ -52,30 +51,76 @@ function getRandomName() {
   return randomName;
 }
 
-function appendLetterDivs(array) {
+function appendLetterDivs(array, className) {
   array.forEach((letter) => {
     const div = document.createElement("div");
     div.innerText = letter;
     nameDiv.appendChild(div);
-    div.className = "name-letter";
+    div.className = className;
   });
 }
 
 function letterCount() {
   firstName = randomName.split(" ")[0].split("");
   lastName = randomName.split(" ")[1].split("");
-  appendLetterDivs(firstName);
-  appendLetterDivs(space);
-  appendLetterDivs(lastName);
+  appendLetterDivs(firstName, "name-letter-hidden");
+  appendLetterDivs(space, "name-space");
+  appendLetterDivs(lastName, "name-letter-hidden");
 }
 
 function clearNameDiv() {
   nameDiv.innerHTML = "";
 }
 
+function toggleClass(element, class1, class2) {
+  if (element.className === class1) element.className = class2;
+  // if (element.className === class2) element.className = class1;
+}
+
+const nameSpace = document.querySelectorAll(".name-letter");
+
 const generatorButton = document.querySelector("#generator");
 generatorButton.addEventListener("click", () => {
   clearNameDiv();
   getRandomName();
   letterCount();
+});
+
+const letterButton = document.querySelectorAll(".letter");
+let pickedLetter = "";
+
+function pickLetter(event) {
+  pickedLetter = event.currentTarget.innerText;
+  checkLetter();
+  console.log("You picked " + pickedLetter);
+}
+
+letterButton.forEach((element) => {
+  let clicked = false;
+  element.addEventListener("click", (event) => {
+    if (clicked === false) {
+      pickedLetter = event.currentTarget;
+      pickedLetter.className = "letter-picked";
+      pickedLetter.disabled = true;
+      console.log("You picked " + pickedLetter.innerText);
+
+      const nameArray = document.querySelectorAll(".name-letter-hidden");
+
+      let mistake = [];
+      nameArray.forEach((el) => {
+        if (el.innerText === pickedLetter.innerText) {
+          el.className = "name-letter";
+          mistake.push(false);
+        } else {
+          mistake.push(true);
+        }
+      });
+
+      if (!mistake.includes(false)) {
+        countMistakes++;
+        console.log("Mistakes " + countMistakes);
+      }
+      clicked = true;
+    }
+  });
 });
