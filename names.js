@@ -1,4 +1,19 @@
-// const names = ["SCARLET JOHANSON", "BRAD PITT", "LU KANG"];
-const names = "BRAD PITT";
+const names = [
+  "BRAD PITT",
+  "JACKIE CHAN",
+  "SCARLET JOHANSON",
+  "WILL SMITH",
+  "MICHAEL KEATON",
+  "DENZEL WASHINGTON",
+  "JOQAUIN PHOENIX",
+  "ORLANDO BLOOM",
+  "JENNIFER ANNISTON",
+  "MONICA BELUCCI",
+  "ANGELINA JOLIE",
+  "JASON STATHAM",
+  "TOM HOLLAND",
+  "CHRIS PRATT",
+  "ANDREW GARFIELD",
+];
 
-export default { names };
+export default names;
