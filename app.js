@@ -1,27 +1,25 @@
-// const para = document.createElement("p");
-// para.innerText = "This is a paragraph";
-// document.body.appendChild(para);
+import names from "./names.js";
+
 const container = document.querySelector(".container");
 const alphabetContainer = document.querySelector(".alphabet-container");
 const image = document.getElementById("image");
+const imageDiv = document.querySelector(".images");
+const nameDiv = document.querySelector(".name-div");
+const nameSpace = document.querySelectorAll(".name-letter");
+const generatorButton = document.querySelector("#generator");
+const startButton = document.getElementById("start-button");
+const modal = document.getElementById("modal-background");
+const mistakesDiv = document.getElementById("mistakes");
 
-const names = [
-  "BRAD PITT",
-  "JACKIE CHAN",
-  "SCARLET JOHANSON",
-  "WILL SMITH",
-  "MICHAEL KEATON",
-  "DENZEL WASHINGTON",
-  "JOQAUIN PHOENIX",
-  "ORLANDO BLOOM",
-  "JENNIFER ANNISTON",
-  "MONICA BELUCCI",
-  "ANGELINA JOLIE",
-  "JASON STATHAM",
-  "TOM HOLLAND",
-  "CHRIS PRATT",
-  "ANDREW GARFIELD",
-];
+let randomName = "";
+let firstName = [];
+let lastName = [];
+let space = [" "];
+let pickedLetter = "";
+let countMistakes = 0;
+
+let gameStarted = false;
+let nameGenerated = false;
 
 const alphabetArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -36,14 +34,9 @@ alphabetArray.forEach((el) => {
   div.className = "letter";
 });
 
-const imageDiv = document.querySelector(".images");
-const nameDiv = document.querySelector(".name-div");
+const letterButtons = document.querySelectorAll(".letter");
 
-let randomName = "";
-let firstName = [];
-let lastName = [];
-let space = [" "];
-let countMistakes = 0;
+alphabetDiv.style.visibility = "hidden";
 
 function getRandomName() {
   const i = Math.floor(Math.random() * names.length);
@@ -73,47 +66,69 @@ function clearNameDiv() {
   nameDiv.innerHTML = "";
 }
 
-function toggleClass(element, class1, class2) {
-  if (element.className === class1) element.className = class2;
-  // if (element.className === class2) element.className = class1;
-}
-
 function startImage() {
   image.src = "src/start-image.jpeg";
 }
 
-const nameSpace = document.querySelectorAll(".name-letter");
-
-const generatorButton = document.querySelector("#generator");
 generatorButton.addEventListener("click", () => {
+  nameGenerated = true;
   startImage();
   clearNameDiv();
   getRandomName();
   letterCount();
 });
 
-const letterButton = document.querySelectorAll(".letter");
-let pickedLetter = "";
-
-function pickLetter(event) {
-  pickedLetter = event.currentTarget.innerText;
-  checkLetter();
-  console.log("You picked " + pickedLetter);
-}
+// function pickLetter(event) {
+//   pickedLetter = event.currentTarget.innerText;
+//   checkLetter();
+//   console.log("You picked " + pickedLetter);
+// }
 
 function siwtchImages() {
-  if (countMistakes > 0) {
+  if (countMistakes > 0 && countMistakes < 8)
     image.src = `src/mistake${countMistakes}.jpeg`;
+}
+
+function hideElement(element) {
+  element.style.display = "none";
+}
+
+function showElement(element) {
+  element.style.display = "inline";
+}
+
+hideElement(generatorButton);
+
+function startButtonLogic() {
+  gameStarted = true;
+  hideElement(startButton);
+  if (gameStarted === true) {
+    showElement(generatorButton);
+    alphabetDiv.style.visibility = "visible";
+  } else {
+    hideElement(generatorButton);
   }
 }
 
-letterButton.forEach((element) => {
+function showModal() {
+  modal.style.display = "inline";
+}
+
+function handleLoosing() {
+  if (countMistakes === 7) {
+    showModal();
+  }
+}
+
+startButton.addEventListener("click", startButtonLogic);
+
+letterButtons.forEach((element) => {
   let clicked = false;
   element.addEventListener("click", (event) => {
-    if (clicked === false) {
+    if (clicked === false && gameStarted === true && nameGenerated === true) {
       pickedLetter = event.currentTarget;
       pickedLetter.className = "letter-picked";
-      console.log("You picked " + pickedLetter.innerText);
+      // console.log("You picked " + pickedLetter.innerText);
 
       const nameArray = document.querySelectorAll(".name-letter-hidden");
 
@@ -130,8 +145,11 @@ letterButton.forEach((element) => {
       if (!mistake.includes(false)) {
         countMistakes++;
         siwtchImages();
-        console.log("Mistakes " + countMistakes);
       }
+      mistakesDiv.innerText = `Mistakes made ${countMistakes} / 7`;
+
+      handleLoosing();
+
       clicked = true;
     }
   });
