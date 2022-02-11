@@ -3,6 +3,7 @@
 // document.body.appendChild(para);
 const container = document.querySelector(".container");
 const alphabetContainer = document.querySelector(".alphabet-container");
+const image = document.getElementById("image");
 
 const names = [
   "BRAD PITT",
@@ -77,10 +78,15 @@ function toggleClass(element, class1, class2) {
   // if (element.className === class2) element.className = class1;
 }
 
+function startImage() {
+  image.src = "src/start-image.jpeg";
+}
+
 const nameSpace = document.querySelectorAll(".name-letter");
 
 const generatorButton = document.querySelector("#generator");
 generatorButton.addEventListener("click", () => {
+  startImage();
   clearNameDiv();
   getRandomName();
   letterCount();
@@ -95,13 +101,18 @@ function pickLetter(event) {
   console.log("You picked " + pickedLetter);
 }
 
+function siwtchImages() {
+  if (countMistakes > 0) {
+    image.src = `src/mistake${countMistakes}.jpeg`;
+  }
+}
+
 letterButton.forEach((element) => {
   let clicked = false;
   element.addEventListener("click", (event) => {
     if (clicked === false) {
       pickedLetter = event.currentTarget;
       pickedLetter.className = "letter-picked";
-      pickedLetter.disabled = true;
       console.log("You picked " + pickedLetter.innerText);
 
       const nameArray = document.querySelectorAll(".name-letter-hidden");
@@ -118,6 +129,7 @@ letterButton.forEach((element) => {
 
       if (!mistake.includes(false)) {
         countMistakes++;
+        siwtchImages();
         console.log("Mistakes " + countMistakes);
       }
       clicked = true;
