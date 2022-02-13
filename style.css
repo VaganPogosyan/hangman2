@@ -117,13 +117,14 @@ body {
   animation-name: slidein;
 }
 
-#modal-background button {
+#play-again {
   font-size: 2em;
   padding: 20px 50px 100px 10px;
   color: white;
   border-radius: 10%;
   border: 2px solid red;
   background-color: rgb(87, 16, 16);
+  cursor: pointer;
 }
 
 @keyframes slidein {

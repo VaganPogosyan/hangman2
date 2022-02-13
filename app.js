@@ -1,22 +1,26 @@
 import names from "./names.js";
 
-const container = document.querySelector(".container");
+// const container = document.querySelector(".container");
 const alphabetContainer = document.querySelector(".alphabet-container");
 const image = document.getElementById("image");
-const imageDiv = document.querySelector(".images");
+// const imageDiv = document.querySelector(".images");
 const nameDiv = document.querySelector(".name-div");
-const nameSpace = document.querySelectorAll(".name-letter");
-const generatorButton = document.querySelector("#generator");
+// const nameSpace = document.querySelectorAll(".name-letter");
+// const generatorButton = document.querySelector("#generator");
 const startButton = document.getElementById("start-button");
 const modal = document.getElementById("modal-background");
 const mistakesDiv = document.getElementById("mistakes");
+const playAgainButton = document.getElementById("play-again");
 
 let randomName = "";
 let firstName = [];
 let lastName = [];
 let space = [" "];
-let pickedLetter = "";
 let countMistakes = 0;
+let pickedLetter = "";
+let clicked;
+let wins = 0;
+let loses = 0;
 
 let gameStarted = false;
 let nameGenerated = false;
@@ -70,21 +74,7 @@ function startImage() {
   image.src = "src/start-image.jpeg";
 }
 
-generatorButton.addEventListener("click", () => {
-  nameGenerated = true;
-  startImage();
-  clearNameDiv();
-  getRandomName();
-  letterCount();
-});
-
-// function pickLetter(event) {
-//   pickedLetter = event.currentTarget.innerText;
-//   checkLetter();
-//   console.log("You picked " + pickedLetter);
-// }
-
-function siwtchImages() {
+function switchImages() {
   if (countMistakes > 0 && countMistakes < 8)
     image.src = `src/mistake${countMistakes}.jpeg`;
 }
@@ -97,41 +87,73 @@ function showElement(element) {
   element.style.display = "inline";
 }
 
-hideElement(generatorButton);
-
 function startButtonLogic() {
+  generateName();
   gameStarted = true;
   hideElement(startButton);
-  if (gameStarted === true) {
-    showElement(generatorButton);
-    alphabetDiv.style.visibility = "visible";
-  } else {
-    hideElement(generatorButton);
-  }
+  alphabetDiv.style.visibility = "visible";
 }
 
-function showModal() {
-  modal.style.display = "inline";
+function showModal(isTrue) {
+  let show = isTrue;
+  if (show === true) modal.style.display = "inline";
+  if (show === false) modal.style.display = "none";
 }
 
 function handleLoosing() {
   if (countMistakes === 7) {
-    showModal();
+    showModal(true);
   }
 }
 
+function handleWinning() {
+  console.log("You won");
+}
+
+function resetRound() {
+  console.log("Game reseted");
+  countMistakes = 0;
+  gameStarted = true;
+  generateName();
+  showModal(false);
+  isLetterPicked(null, false);
+}
+
+function generateName() {
+  nameGenerated = true;
+  startImage();
+  clearNameDiv();
+  getRandomName();
+  letterCount();
+  // hideElement(generatorButton);
+}
+
+// hideElement(generatorButton);
+// generatorButton.addEventListener("click", generateName);
 startButton.addEventListener("click", startButtonLogic);
 
+playAgainButton.addEventListener("click", () => {
+  resetRound();
+});
+
+function isLetterPicked(ev, isPicked) {
+  if (isPicked === true) {
+    pickedLetter = ev.currentTarget;
+    pickedLetter.className = "letter-picked";
+  }
+  if (isPicked === false) {
+    pickedLetter = "";
+    letterButtons.forEach((element) => (element.className = "letter"));
+  }
+}
+
 letterButtons.forEach((element) => {
-  let clicked = false;
   element.addEventListener("click", (event) => {
+    clicked = false;
     if (clicked === false && gameStarted === true && nameGenerated === true) {
-      pickedLetter = event.currentTarget;
-      pickedLetter.className = "letter-picked";
-      // console.log("You picked " + pickedLetter.innerText);
+      isLetterPicked(event, true);
 
       const nameArray = document.querySelectorAll(".name-letter-hidden");
-
       let mistake = [];
       nameArray.forEach((el) => {
         if (el.innerText === pickedLetter.innerText) {
@@ -144,13 +166,13 @@ letterButtons.forEach((element) => {
 
       if (!mistake.includes(false)) {
         countMistakes++;
-        siwtchImages();
+        switchImages();
       }
+      clicked = true;
+
       mistakesDiv.innerText = `Mistakes made ${countMistakes} / 7`;
 
       handleLoosing();
-
-      clicked = true;
     }
   });
 });
