@@ -13,6 +13,7 @@ const modalWin = document.getElementById("modal-background-win");
 const mistakesDiv = document.getElementById("mistakes");
 const playAgainButton = document.getElementById("play-again");
 const playAgainButtonWin = document.getElementById("play-again-win");
+const winLooseDiv = document.getElementById("win-loose-count");
 
 let randomName = "";
 let firstName = [];
@@ -21,8 +22,9 @@ let space = [" "];
 let countMistakes = 0;
 let pickedLetter = "";
 let clicked;
-// let wins = 0;
-// let loses = 0;
+let winCount = 0;
+let looseCount = 0;
+let playedCount = 0;
 
 let gameStarted = false;
 let nameGenerated = false;
@@ -111,13 +113,23 @@ function showModalWin(isTrue) {
 function handleLoosing() {
   if (countMistakes === 7) {
     showModalLoose(true);
+    looseCount++;
+    showWinLooseCount();
   }
 }
 
 function handleWinning(array) {
   if (array[1] === undefined) {
     showModalWin(true);
+    winCount++;
+    showWinLooseCount();
   }
+}
+
+function showWinLooseCount() {
+  playedCount++;
+  console.log(winCount, looseCount, playedCount);
+  winLooseDiv.innerText = `Wins : ${winCount} / Losses : ${looseCount} / Played : ${playedCount}`;
 }
 
 function resetRound() {
