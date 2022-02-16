@@ -1,12 +1,22 @@
+:root {
+  --bg-color: rgb(0, 70, 82);
+  --color-red: red;
+  --txt-color: rgb(149, 249, 227);
+  --letter-bg-color: rgb(73, 212, 157);
+  /* --letter-border: rgb(254, 74, 73); */
+  --letter-border: rgb(255, 153, 0);
+  --letter-picked: rgb(16, 106, 122);
+  --letter-hover: rgb(103, 255, 194);
+}
+
 * {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-  /* border: 2px solid rgba(255, 0, 0, 0.208); */
 }
 
 body {
-  background-color: rgb(31, 111, 125);
+  background-color: var(--bg-color);
 }
 
 .container {
@@ -36,32 +46,30 @@ body {
 .letter-picked {
   width: 40px;
   font-size: 30px;
-  background-color: rgb(57, 162, 127);
+  background-color: var(--letter-bg-color);
   margin: 10px;
   cursor: pointer;
 }
 
 .letter-picked {
-  background-color: rgb(27, 80, 63);
+  background-color: var(--letter-picked);
   cursor: default;
 }
 
 .letter:hover {
   transform: scale(1.2);
-  background-color: rgb(76, 220, 172);
+  background-color: var(--letter-hover);
 }
 
 .name-div {
   height: 70px;
   display: flex;
   flex-direction: row;
-  /* border: 2px solid red; */
 }
 
 .name-letter,
 .name-space,
 .name-letter-hidden {
-  /* background-color: rgb(159, 137, 104); */
   height: 60px;
   width: 60px;
   font-size: 40px;
@@ -69,11 +77,12 @@ body {
   align-items: center;
   justify-content: center;
   margin-left: 15px;
+  color: var(--txt-color);
 }
 
 .name-letter-hidden {
-  border-bottom: 4px solid orange;
-  color: rgba(0, 0, 0, 0.3);
+  border-bottom: 4px solid var(--letter-border);
+  color: rgba(0, 0, 0, 0);
 }
 
 .start-div {
@@ -86,6 +95,14 @@ body {
   height: 40px;
   cursor: pointer;
   font-size: larger;
+}
+
+.mistakes {
+  color: var(--letter-border);
+}
+
+.win-loose {
+  color: var(--letter-border);
 }
 
 /* ===============================*/
@@ -104,7 +121,7 @@ body {
 
 #modal,
 #modal-win {
-  border: 5px solid red;
+  border: 5px solid var(--color-red);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -118,7 +135,7 @@ body {
 
 .modal-text {
   margin-bottom: 200px;
-  color: red;
+  color: var(--color-red);
   font-size: 10em;
   animation-duration: 1.5s;
   animation-name: slidein;
@@ -134,11 +151,11 @@ body {
   padding: 40px 80px;
   color: white;
   border-radius: 10%;
-  border: 2px solid red;
+  border: 2px solid var(--color-red);
   background-color: rgb(87, 16, 16);
   cursor: pointer;
   position: absolute;
-  top: 550px;
+  top: 620px;
 }
 
 #play-again-win {
@@ -152,5 +169,45 @@ body {
   }
   to {
     margin-bottom: 200px;
+  }
+}
+
+@media only screen and (max-width: 1185px) {
+  .images img {
+    width: 700px;
+  }
+
+  .name-letter,
+  .name-space,
+  .name-letter-hidden {
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .images img {
+    width: 650px;
+  }
+
+  .name-letter,
+  .name-space,
+  .name-letter-hidden {
+    height: 40px;
+    width: 40px;
+    font-size: 20px;
+  }
+  /* 
+  .name-div {
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+  } */
+}
+
+@media only screen and (max-width: 500px) {
+  .images img {
+    width: 300px;
   }
 }

@@ -137,7 +137,7 @@ function handleWinning(array) {
 function showWinLooseCount() {
   playedCount++;
   console.log(winCount, looseCount, playedCount);
-  winLooseDiv.innerText = `Wins : ${winCount} / Losses : ${looseCount} / Played : ${playedCount}`;
+  winLooseDiv.innerHTML = `Wins : ${winCount}<br>Losses : ${looseCount}<br>Played : ${playedCount}`;
 }
 
 function resetRound() {
