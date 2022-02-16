@@ -10,10 +10,20 @@
 </head>
 <body>
     <div id="modal-background">
-        <div id="modal">
-            <h1>YOU LOST</h1>
-            <button id="play-again">Next actor</button>
+        <!-- <div class="modal-container"> -->
+            <div id="modal">
+                <h1 class="modal-text">YOU LOST</h1>
+                <button id="play-again">Next actor</button>
+            <!-- </div> -->
         </div>
+    </div>
+    <div id="modal-background-win">
+        <!-- <div class="modal-container"> -->
+            <div id="modal-win">
+                <h1 class="modal-text">YOU WON!</h1class></h1>
+                <button id="play-again-win">Next actor</button>
+            </div>
+        <!-- </div> -->
     </div>
     <div class="container">
         <div>
@@ -44,6 +54,10 @@
 
         <div class="mistakes">
             <h1 id="mistakes">Mistakes made 0 / 7</h1>
+        </div>
+
+        <div class="win-loose">
+            <h1 id="win-loose-count">Wins : 0 / Losses : 0 / Played : 0</h1>
         </div>
     </div>
 </body>

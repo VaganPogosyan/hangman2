@@ -9,8 +9,11 @@ const nameDiv = document.querySelector(".name-div");
 // const generatorButton = document.querySelector("#generator");
 const startButton = document.getElementById("start-button");
 const modal = document.getElementById("modal-background");
+const modalWin = document.getElementById("modal-background-win");
 const mistakesDiv = document.getElementById("mistakes");
 const playAgainButton = document.getElementById("play-again");
+const playAgainButtonWin = document.getElementById("play-again-win");
+const winLooseDiv = document.getElementById("win-loose-count");
 
 let randomName = "";
 let firstName = [];
@@ -19,8 +22,9 @@ let space = [" "];
 let countMistakes = 0;
 let pickedLetter = "";
 let clicked;
-let wins = 0;
-let loses = 0;
+let winCount = 0;
+let looseCount = 0;
+let playedCount = 0;
 
 let gameStarted = false;
 let nameGenerated = false;
@@ -74,6 +78,10 @@ function startImage() {
   image.src = "src/start-image.jpeg";
 }
 
+function winImage() {
+  image.src = "src/win-image.jpeg";
+}
+
 function switchImages() {
   if (countMistakes > 0 && countMistakes < 8)
     image.src = `src/mistake${countMistakes}.jpeg`;
@@ -83,9 +91,9 @@ function hideElement(element) {
   element.style.display = "none";
 }
 
-function showElement(element) {
-  element.style.display = "inline";
-}
+// function showElement(element) {
+//   element.style.display = "inline";
+// }
 
 function startButtonLogic() {
   generateName();
@@ -94,20 +102,42 @@ function startButtonLogic() {
   alphabetDiv.style.visibility = "visible";
 }
 
-function showModal(isTrue) {
+function showModalLoose(isTrue) {
   let show = isTrue;
   if (show === true) modal.style.display = "inline";
   if (show === false) modal.style.display = "none";
 }
 
-function handleLoosing() {
+function showModalWin(isTrue) {
+  let show = isTrue;
+  if (show === true) modalWin.style.display = "inline";
+  if (show === false) modalWin.style.display = "none";
+}
+
+function handleLoosing(arr) {
   if (countMistakes === 7) {
-    showModal(true);
+    showModalLoose(true);
+    looseCount++;
+    showWinLooseCount();
+    arr.forEach((el) => {
+      el.className = "name-letter";
+    });
   }
 }
 
-function handleWinning() {
-  console.log("You won");
+function handleWinning(array) {
+  if (array[1] === undefined) {
+    showModalWin(true);
+    winCount++;
+    showWinLooseCount();
+    winImage();
+  }
+}
+
+function showWinLooseCount() {
+  playedCount++;
+  console.log(winCount, looseCount, playedCount);
+  winLooseDiv.innerText = `Wins : ${winCount} / Losses : ${looseCount} / Played : ${playedCount}`;
 }
 
 function resetRound() {
@@ -115,7 +145,8 @@ function resetRound() {
   countMistakes = 0;
   gameStarted = true;
   generateName();
-  showModal(false);
+  showModalLoose(false);
+  showModalWin(false);
   isLetterPicked(null, false);
 }
 
@@ -133,6 +164,10 @@ function generateName() {
 startButton.addEventListener("click", startButtonLogic);
 
 playAgainButton.addEventListener("click", () => {
+  resetRound();
+});
+
+playAgainButtonWin.addEventListener("click", () => {
   resetRound();
 });
 
@@ -172,7 +207,8 @@ letterButtons.forEach((element) => {
 
       mistakesDiv.innerText = `Mistakes made ${countMistakes} / 7`;
 
-      handleLoosing();
+      handleLoosing(nameArray);
+      handleWinning(mistake);
     }
   });
 });
