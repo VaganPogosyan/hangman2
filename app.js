@@ -78,6 +78,10 @@ function startImage() {
   image.src = "src/start-image.jpeg";
 }
 
+function winImage() {
+  image.src = "src/win-image.jpeg";
+}
+
 function switchImages() {
   if (countMistakes > 0 && countMistakes < 8)
     image.src = `src/mistake${countMistakes}.jpeg`;
@@ -87,9 +91,9 @@ function hideElement(element) {
   element.style.display = "none";
 }
 
-function showElement(element) {
-  element.style.display = "inline";
-}
+// function showElement(element) {
+//   element.style.display = "inline";
+// }
 
 function startButtonLogic() {
   generateName();
@@ -123,6 +127,7 @@ function handleWinning(array) {
     showModalWin(true);
     winCount++;
     showWinLooseCount();
+    winImage();
   }
 }
 
