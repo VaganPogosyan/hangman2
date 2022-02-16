@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(39, 136, 154);
+  background-color: rgb(31, 111, 125);
 }
 
 .container {
@@ -18,7 +18,7 @@ body {
 }
 
 .images img {
-  width: 600px;
+  width: 800px;
 }
 
 .alphabet-container {
@@ -73,7 +73,7 @@ body {
 
 .name-letter-hidden {
   border-bottom: 4px solid orange;
-  color: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.3);
 }
 
 .start-div {

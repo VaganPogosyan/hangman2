@@ -114,11 +114,14 @@ function showModalWin(isTrue) {
   if (show === false) modalWin.style.display = "none";
 }
 
-function handleLoosing() {
+function handleLoosing(arr) {
   if (countMistakes === 7) {
     showModalLoose(true);
     looseCount++;
     showWinLooseCount();
+    arr.forEach((el) => {
+      el.className = "name-letter";
+    });
   }
 }
 
@@ -204,7 +207,7 @@ letterButtons.forEach((element) => {
 
       mistakesDiv.innerText = `Mistakes made ${countMistakes} / 7`;
 
-      handleLoosing();
+      handleLoosing(nameArray);
       handleWinning(mistake);
     }
   });
