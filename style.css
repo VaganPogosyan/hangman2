@@ -1,12 +1,45 @@
+:root {
+  /* --bg-color: rgb(0, 70, 82, 0.8); */
+  --bg-color: rgba(0, 0, 0, 0.75);
+  --color-red: red;
+  --txt-color: rgb(149, 249, 227);
+  --letter-bg-color: rgb(73, 212, 157);
+  /* --letter-border: rgb(254, 74, 73); */
+  --letter-border: rgb(255, 153, 0);
+  --letter-picked: rgb(11, 92, 80);
+  --letter-hover: rgb(103, 255, 194);
+}
+
 * {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-  /* border: 2px solid rgba(255, 0, 0, 0.208); */
 }
 
+/* body {
+  background-image: url("./src/actors.jpeg");
+} */
 body {
-  background-color: rgb(31, 111, 125);
+  background: url(./src/actors.jpeg);
+  background-color: rgb(4, 45, 41);
+  background-blend-mode: multiply;
+  background-position: top;
+  background-size: cover;
+  /* background-repeat: no-repeat; */
+  /* background-attachment: fixed; */
+}
+
+#title {
+  display: flex;
+  justify-content: center;
+  color: var(--letter-border);
+  margin-top: 30px;
+}
+
+.big-container {
+  display: grid;
+  /* background-color: var(--bg-color); */
+  grid-template-columns: minmax(200px, 1fr) 1fr 1fr;
 }
 
 .container {
@@ -18,7 +51,7 @@ body {
 }
 
 .images img {
-  width: 800px;
+  width: 750px;
 }
 
 .alphabet-container {
@@ -36,32 +69,30 @@ body {
 .letter-picked {
   width: 40px;
   font-size: 30px;
-  background-color: rgb(57, 162, 127);
+  background-color: var(--letter-bg-color);
   margin: 10px;
   cursor: pointer;
 }
 
 .letter-picked {
-  background-color: rgb(27, 80, 63);
+  background-color: var(--letter-picked);
   cursor: default;
 }
 
 .letter:hover {
   transform: scale(1.2);
-  background-color: rgb(76, 220, 172);
+  background-color: var(--letter-hover);
 }
 
 .name-div {
   height: 70px;
   display: flex;
   flex-direction: row;
-  /* border: 2px solid red; */
 }
 
 .name-letter,
 .name-space,
 .name-letter-hidden {
-  /* background-color: rgb(159, 137, 104); */
   height: 60px;
   width: 60px;
   font-size: 40px;
@@ -69,24 +100,61 @@ body {
   align-items: center;
   justify-content: center;
   margin-left: 15px;
+  color: var(--txt-color);
 }
 
 .name-letter-hidden {
-  border-bottom: 4px solid orange;
-  color: rgba(0, 0, 0, 0.3);
+  border-bottom: 4px solid var(--letter-border);
+  color: rgba(0, 0, 0, 0);
 }
 
 .start-div {
   height: 40px;
 }
 
-#generator,
 #start-button {
   width: 200px;
-  height: 40px;
+  height: 60px;
   cursor: pointer;
-  font-size: larger;
+  font-size: 1.8em;
+  color: white;
+  border-radius: 10px;
+  border: 2px solid var(--letter-hover);
+  background-color: var(--letter-picked);
+  cursor: pointer;
+  margin-top: 20px;
 }
+
+#start-button:hover {
+  background-color: var(--letter-hover);
+  color: var(--letter-picked);
+  transform: scale(1.05);
+}
+
+#start-button:active {
+  transform: scale(0.95);
+}
+
+.left-side {
+  margin-top: 250px;
+}
+
+.mistakes,
+.win-loose {
+  color: var(--letter-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#mistakes,
+#win-loose-count {
+  font-size: 1.8em;
+}
+
+/* .win-loose {
+  color: var(--letter-border);
+} */
 
 /* ===============================*/
 /* ============ MODAL ============*/
@@ -104,7 +172,7 @@ body {
 
 #modal,
 #modal-win {
-  border: 5px solid red;
+  border: 5px solid var(--color-red);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -118,7 +186,7 @@ body {
 
 .modal-text {
   margin-bottom: 200px;
-  color: red;
+  color: var(--color-red);
   font-size: 10em;
   animation-duration: 1.5s;
   animation-name: slidein;
@@ -133,12 +201,12 @@ body {
   font-size: 2em;
   padding: 40px 80px;
   color: white;
-  border-radius: 10%;
-  border: 2px solid red;
+  border-radius: 30px;
+  border: 2px solid var(--color-red);
   background-color: rgb(87, 16, 16);
   cursor: pointer;
   position: absolute;
-  top: 550px;
+  top: 620px;
 }
 
 #play-again-win {
@@ -152,5 +220,50 @@ body {
   }
   to {
     margin-bottom: 200px;
+  }
+}
+
+@media only screen and (max-width: 1185px) {
+  .big-container {
+    display: inline;
+    /* grid-template-columns: 1fr 1fr 1fr; */
+  }
+
+  .images img {
+    width: 700px;
+  }
+
+  .name-letter,
+  .name-space,
+  .name-letter-hidden {
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .images img {
+    width: 650px;
+  }
+
+  .name-letter,
+  .name-space,
+  .name-letter-hidden {
+    height: 40px;
+    width: 40px;
+    font-size: 20px;
+  }
+  /* 
+  .name-div {
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+  } */
+}
+
+@media only screen and (max-width: 500px) {
+  .images img {
+    width: 300px;
   }
 }
