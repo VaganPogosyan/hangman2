@@ -205,7 +205,7 @@ letterButtons.forEach((element) => {
       }
       clicked = true;
 
-      mistakesDiv.innerText = `Mistakes made ${countMistakes} / 7`;
+      mistakesDiv.innerText = `Mistakes: ${countMistakes} / 7`;
 
       handleLoosing(nameArray);
       handleWinning(mistake);
